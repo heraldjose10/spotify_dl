@@ -3,7 +3,7 @@ import json
  
 
 def get_playlists(id,token):
-    url='https://api.spotify.com/v1/playlists/{}/tracks?limit=50'.format(id)
+    url='https://api.spotify.com/v1/playlists/{}/tracks?limit=5'.format(id)
     head={
         'Content-Type' :'application/json',
         'Authorization' :'Bearer {}'.format(token)

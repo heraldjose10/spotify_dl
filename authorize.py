@@ -1,6 +1,16 @@
 import requests
-import webbrowser
+# import webbrowser
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
+import time
 from spotify_app import client_id
+
+PATH='C:\Program Files (x86)\chromedriver.exe'
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+driver = webdriver.Chrome(executable_path=PATH,chrome_options=options)
+
 
 def open_browser():
     url='https://accounts.spotify.com/authorize'
@@ -11,4 +21,18 @@ def open_browser():
         'scope' : 'playlist-modify-public playlist-modify-private'
     }
     res=requests.get(url,params=para)
-    webbrowser.open(res.url,new=1)
+    driver.get(res.url)
+    print('WE DO NOT SAvE CREDs')
+    user=input('---spotify username---')
+    password=input('---spotify password---')
+    inputElement=driver.find_element_by_id("login-username")
+    inputElement.send_keys(user)
+    inp=driver.find_element_by_id("login-password")
+    inp.send_keys(password)
+    but=driver.find_element_by_id('login-button')
+    but.send_keys("\n")
+    time.sleep(5)
+    u=driver.current_url
+    driver.close()
+
+    return(u[25:])

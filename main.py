@@ -6,9 +6,8 @@ from scrape_links import scrape
 from download import d_l
 
 
-open_browser()
 
-user_code=input('input code:')
+user_code=open_browser()
 playlist_id=input('give playlisy id:')
 acc_token,ref_token=refresh(user_code)
 songs=get_playlists(playlist_id,acc_token)
