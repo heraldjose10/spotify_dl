@@ -24,7 +24,7 @@ def my_hook(d):
 def d_l(li):
     name=input('what should be folder name?:')
     ydl_opts = {
-        'outtmpl': os.path.join('D:/{}'.format(name), '%(title)s-%(id)s.%(ext)s'),
+        'outtmpl': os.path.join('C:/{}'.format(name), '%(title)s-%(id)s.%(ext)s'),
         'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',

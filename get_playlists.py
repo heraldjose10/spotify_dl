@@ -22,11 +22,4 @@ def get_playlists(id,token):
         })
         
     return(songs)
-    # with open("sample.json", "w") as outfile: 
-    #     outfile.write(json.dumps(res))
-
-# def main():
-    # get_playlists('37i9dQZF1CAqIft9opEgvG','BQD00EWLAQHaNeLcMhqMOLejKfwFXtulGINjaU0AHjOUXtudP-sscyyMffq9lL06fZ6yfh6TEuWQhBlnOu619LB1oLkfjsRSVLgvT2JOCjtSu3pvvN4KZ0Dl2iqMu-J3z6uFCtbaK96qfqgOy36MS4PHCrd3tfemaUEfbKGCyrBORYUgcIkfU0Bdd33VklFc7BmSycm3bpt2Zsn5aAUWRmsGhTP_wic') 
-
-# if __name__=='__main__':
-#     main()
+    

@@ -1,5 +1,5 @@
 import requests
-from spotify_app import client_id,client_secret
+from app import client_id,client_secret
 
 
 def refresh(code):

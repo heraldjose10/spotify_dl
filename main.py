@@ -8,7 +8,7 @@ from download import d_l
 
 
 user_code=open_browser()
-playlist_id=input('give playlisy id:')
+playlist_id=input('give playlist id:')
 acc_token,ref_token=refresh(user_code)
 songs=get_playlists(playlist_id,acc_token)
 song_li=links(songs)

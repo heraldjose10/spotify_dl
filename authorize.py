@@ -1,10 +1,9 @@
 import requests
-# import webbrowser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 import time
-from spotify_app import client_id
+from app import client_id
 
 PATH='C:\Program Files (x86)\chromedriver.exe'
 options = webdriver.ChromeOptions()

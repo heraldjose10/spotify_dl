@@ -1,0 +1,5 @@
+requests==2.22.0
+selenium==3.141.0
+json5==0.8.5
+future==0.17.1
+youtube-dl==2020.7.28
