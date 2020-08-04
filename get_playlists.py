@@ -12,6 +12,7 @@ def get_playlists(id,token):
     res=r.json()
     songs=[]
     for i in range(len(res.get('items'))):
+        # print('Finding Song Info of Song {} of {}'.format(i+1,len(res.get('items'))))
         name=res.get('items')[i].get('track').get('name')
         artists=[]
         for j in range(len(res.get('items')[i].get('track').get('artists'))):

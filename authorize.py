@@ -8,6 +8,7 @@ from app import client_id
 PATH='C:\Program Files (x86)\chromedriver.exe'
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
+options.add_argument("--log-level=3")
 driver = webdriver.Chrome(executable_path=PATH,chrome_options=options)
 
 
@@ -24,6 +25,7 @@ def open_browser():
     print('WE DO NOT SAvE CREDs')
     user=input('---spotify username---')
     password=input('---spotify password---')
+    print('LOgginG IN Spotify')
     inputElement=driver.find_element_by_id("login-username")
     inputElement.send_keys(user)
     inp=driver.find_element_by_id("login-password")
