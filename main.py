@@ -13,7 +13,8 @@ acc_token,ref_token=refresh(user_code)
 songs=get_playlists(playlist_id,acc_token)
 song_li=links(songs)
 to_download=scrape(song_li)
-d_l(to_download)
+path=input('download path:')
+d_l(to_download,path)
 
 
 
