@@ -7,7 +7,7 @@ from app import client_id
 
 PATH='C:\Program Files (x86)\chromedriver.exe'
 options = webdriver.ChromeOptions()
-options.add_argument('headless')
+# options.add_argument('headless')
 options.add_argument("--log-level=3")
 driver = webdriver.Chrome(executable_path=PATH,chrome_options=options)
 
