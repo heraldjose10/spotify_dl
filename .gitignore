@@ -4,3 +4,4 @@ debug.log
 test.py
 app.py
 genius.py
+creds.json

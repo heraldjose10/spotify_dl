@@ -25,7 +25,7 @@ options.add_argument("--log-level=3")
 driver = webdriver.Chrome(executable_path=PATH,chrome_options=options)
 
 
-def open_browser():
+def login_spotify():
     url='https://accounts.spotify.com/authorize'
     para={
         'client_id' : client_id,
@@ -35,10 +35,6 @@ def open_browser():
     }
     res=requests.get(url,params=para)
     driver.get(res.url)
-    print('WE DO NOT SAvE CREDs')
-    user=input('---spotify username---')
-    password=input('---spotify password---')
-    print('LOgginG IN Spotify')
     inputElement=driver.find_element_by_id("login-username")
     inputElement.send_keys(user)
     inp=driver.find_element_by_id("login-password")
@@ -51,6 +47,20 @@ def open_browser():
     return(u[25:])
 
 
+def open_browser(user,password):
+    if not os.path.exists("creds.json"):
+        return(login_spotify())
+    else:
+        with open('creds.json', 'r') as openfile: 
+            logs = json.load(openfile)
+        openfile.close()
+
+        if user==logs.get('username'):
+            return('exists')
+        else:
+            return(login_spotify())
+
+
 def refresh(code):
     url='https://accounts.spotify.com/api/token'
     data={
@@ -60,9 +70,19 @@ def refresh(code):
     }
     res=requests.post(url=url,data=data,auth = (client_id, client_secret))
     res=res.json()
+    print(res)
     return(res.get('access_token'),res.get('refresh_token'))
 
+def save_refresh(r_token,username):
+    user={
+        'username' : username,
+        'refresh_token' : r_token
+    }
+    # tokens.append(user)
+    with open("creds.json", "w") as outfile: 
+        json.dump(user, outfile) 
 
+    
 def get_playlists(id,token):
     url='https://api.spotify.com/v1/playlists/{}/tracks?limit=50'.format(id)
     head={
@@ -147,7 +167,7 @@ def metadata(ID):
 
 def scrape(li):
     print('Scraping Music Links--This will take few minutes')
-    print(li)
+    # print(li)
     for vid in li:
         # print(vid)
         if vid.get('song_id'):
@@ -255,17 +275,47 @@ def d_l(li,folder):
             os.remove(pic)
 
             c+=1
+def a_token_from_r_token():
+    with open('creds.json', 'r') as openfile: 
+        logs = json.load(openfile)
+    ref_token=logs.get('refresh_token')    
+    url='https://accounts.spotify.com/api/token'
+    data={
+        'grant_type' : 'refresh_token',
+        'refresh_token' : ref_token,
+        'redirect_uri' : 'https://github.com/'
+    }
+    res=requests.post(url=url,data=data,auth = (client_id, client_secret))
+    res=res.json()
+    return(res.get('access_token'))
+    
 
 
+print('WE DO NOT SAvE CREDs')
+user=input('---spotify username---')
+password=input('---spotify password---')
+print('LOgginG IN Spotify')
 
-user_code=open_browser()
-playlist_id=input('give playlist id:')
-path=input('download path:')
-acc_token,ref_token=refresh(user_code)
-songs=get_playlists(playlist_id,acc_token)
-song_li=links(songs)
-to_download=scrape(song_li)
-d_l(to_download,path)
+user_code=open_browser(user,password)
+print(user_code)
+if user_code=='exists':
+    playlist_id=input('give playlist id:')
+    path=input('download path:')
+    acc_token=a_token_from_r_token()
+    songs=get_playlists(playlist_id,acc_token)
+    song_li=links(songs)
+    to_download=scrape(song_li)
+    d_l(to_download,path)
+else:
+    playlist_id=input('give playlist id:')
+    path=input('download path:')
+    acc_token,ref_token=refresh(user_code)
+    print(acc_token,ref_token)
+    save_refresh(ref_token,user)
+    songs=get_playlists(playlist_id,acc_token)
+    song_li=links(songs)
+    to_download=scrape(song_li)
+    d_l(to_download,path)
 
 
 
